@@ -11,7 +11,8 @@ const limiter = require('./utils/limiter');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const serverErrorHandler = require('./middlewares/serverErrorHandler');
 
-const { PORT = 3000 } = process.env;
+// const { PORT = 3000 } = process.env;
+const { PORT, DB_ADDRESS } = require('./utils/config');
 
 const app = express();
 
@@ -22,7 +23,7 @@ app.use(limiter);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect('mongodb://localhost:27017/mongodb', {
+mongoose.connect(DB_ADDRESS, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
