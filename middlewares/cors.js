@@ -1,9 +1,9 @@
 module.exports.corsConfig = {
   origin: [
-    // 'https://movie.students.nomoredomains.rocks',
-    // 'http://movie.students.nomoredomains.rocks',
-    // 'https://www.movie.students.nomoredomains.rocks',
-    // 'http://www.movie.students.nomoredomains.rocks',
+    'https://movie.students.nomoredomains.rocks',
+    'http://movie.students.nomoredomains.rocks',
+    'https://www.movie.students.nomoredomains.rocks',
+    'http://www.movie.students.nomoredomains.rocks',
     'http://localhost:3000',
     'https://localhost:3000',
   ],
