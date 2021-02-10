@@ -9,56 +9,55 @@ const { conflictError, notFound, badRequstError } = require('../utils/constants'
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 const createUser = (req, res, next) => {
-  const {email, password, name} = req.body;
+  const { email, password, name } = req.body;
   bcrypt.hash(password, 10)
-  .then((hash) => User.create({
-    email,
-    password: hash,
-    name,
-  }))
-  .catch((err) => {
-    if(err.name === 'MongoError' || err.code === 11000){
-      throw new ConflictError({ message: conflictError });
-    }
-    else next(err);
-  })
-  .then((user) => res.send({
-    email: user.email,
-    name: user.name,
-  }))
-  .catch(next);
-}
-const login = (req, res, next) => {
-  const {email, password} = req.body;
-  return User.findUserByCredentials(email, password)
-  .then((user) => {
-    const token = jwt.sign(
-      { _id: user._id },
-      NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
-      { expiresIn: '7d' },
-    );
-    res
-    .cookie('jwt', token, {
-      maxAge: 3600000 * 24 * 7,
-      httpOnly: true,
-      sameSite: true,
+    .then((hash) => User.create({
+      email,
+      password: hash,
+      name,
+    }))
+    .catch((err) => {
+      if (err.name === 'MongoError' || err.code === 11000) {
+        throw new ConflictError({ message: conflictError });
+      } else next(err);
     })
-    .send({
-      email: user.email, name: user.name, token,
-    });
-  })
-  .catch(next);
-}
+    .then((user) => res.send({
+      email: user.email,
+      name: user.name,
+    }))
+    .catch(next);
+};
+const login = (req, res, next) => {
+  const { email, password } = req.body;
+  return User.findUserByCredentials(email, password)
+    .then((user) => {
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+        { expiresIn: '7d' },
+      );
+      res
+        .cookie('jwt', token, {
+          maxAge: 3600000 * 24 * 7,
+          httpOnly: true,
+          sameSite: true,
+        })
+        .send({
+          email: user.email, name: user.name, token,
+        });
+    })
+    .catch(next);
+};
 const getUser = (req, res, next) => {
   User.findById(req.user._id)
-  .then((user) => {
-    if (!user) {
-      throw new NotFoundError({ message: notFound });
-    }
-    res.send(user);
-  })
-  .catch(next);
-}
+    .then((user) => {
+      if (!user) {
+        throw new NotFoundError({ message: notFound });
+      }
+      res.send(user);
+    })
+    .catch(next);
+};
 const updateUser = (req, res, next) => {
   const { email, name } = req.body;
 
@@ -74,11 +73,10 @@ const updateUser = (req, res, next) => {
       if (!user) {
         throw new BadRequestError({ message: badRequstError });
       }
-
       res.send(user);
     })
     .catch(next);
-}
+};
 
 module.exports = {
   createUser,

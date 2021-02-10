@@ -42,11 +42,11 @@ const movieSchema = new mongoose.Schema({
       message: 'Введён некорректный URL',
     },
   },
-  thumbnail : {
+  thumbnail: {
     type: String,
     required: true,
     validate: {
-      validator(thumbnail ) {
+      validator(thumbnail) {
         return validator.isURL(thumbnail);
       },
       message: 'Введён некорректный URL',
@@ -65,7 +65,7 @@ const movieSchema = new mongoose.Schema({
   nameEN: {
     type: String,
     required: true,
-  }
-})
+  },
+});
 
 module.exports = mongoose.model('movie', movieSchema);

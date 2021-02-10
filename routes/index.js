@@ -17,5 +17,4 @@ router.use((req, res, next) => {
   next(new NotFoundError({ message: notFound }));
 });
 
-
 module.exports = router;

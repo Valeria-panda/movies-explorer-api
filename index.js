@@ -1,11 +1,11 @@
 const express = require('express');
 const cors = require('cors');
-const { corsConfig } = require('./middlewares/cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const helmet = require('helmet');
+const { corsConfig } = require('./middlewares/cors');
 const router = require('./routes');
 const limiter = require('./utils/limiter');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
