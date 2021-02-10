@@ -1,1 +1,5 @@
-# movies-explorer-api
+# Приложение поиска фиьмов (фронтенд + бэкенд)
+
+Домен сервера - https://api.movie.students.nomoredomains.rocks
+
+Публичный IP-адрес сервера - 84.252.129.123
