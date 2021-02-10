@@ -1,5 +1,6 @@
 const { celebrate, Joi, CelebrateError } = require('celebrate');
 const validator = require('validator');
+Joi.objectId = require('joi-objectid')(Joi);
 
 const urlValidation = (value) => {
   if (!validator.isURL(value)) {
@@ -10,7 +11,7 @@ const urlValidation = (value) => {
 
 const validateId = celebrate({
   params: Joi.object().keys({
-    _id: Joi.string().alphanum().length(24).hex(),
+    _id: Joi.objectId(),
   }),
 });
 
@@ -40,7 +41,7 @@ const validateMovies = celebrate({
   body: Joi.object().keys({
     country: Joi.string().required(),
     director: Joi.string().required(),
-    duration: Joi.string().required(),
+    duration: Joi.number().required(),
     year: Joi.string().required(),
     description: Joi.string().required(),
     image: Joi.string().custom(urlValidation).required(),
