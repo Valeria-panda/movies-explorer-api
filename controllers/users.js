@@ -79,9 +79,16 @@ const updateUser = (req, res, next) => {
     .catch(next);
 };
 
+const signout = (req, res) => {
+  res
+    .clearCookie('jwt', { httpOnly: true, sameSite: true })
+    .send({ message: 'Выход' });
+};
+
 module.exports = {
   createUser,
   login,
   getUser,
   updateUser,
+  signout,
 };

@@ -58,6 +58,12 @@ const movieSchema = new mongoose.Schema({
     required: true,
     select: false,
   },
+  movieId: {
+    type: String,
+    required: true,
+    select: false,
+    unique: true,
+  },
   nameRU: {
     type: String,
     required: true,
