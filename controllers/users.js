@@ -4,7 +4,7 @@ const User = require('../models/user');
 const BadRequestError = require('../errors/badRequestError');
 const NotFoundError = require('../errors/notFoundError');
 const ConflictError = require('../errors/conflictError');
-const { conflictError, notFound, badRequstError } = require('../utils/constants');
+const { conflictError, notFound, badRequestError } = require('../utils/constants');
 
 const { JWT_SECRET } = require('../utils/config');
 
@@ -18,7 +18,7 @@ const createUser = (req, res, next) => {
     }))
     .catch((err) => {
       if (err.name === 'MongoError' || err.code === 11000) {
-        throw new ConflictError({ message: conflictError });
+        throw new ConflictError(conflictError);
       } else next(err);
     })
     .then((user) => res.send({
@@ -53,7 +53,7 @@ const getUser = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
       if (!user) {
-        throw new NotFoundError({ message: notFound });
+        throw new NotFoundError(notFound);
       }
       res.send(user);
     })
@@ -72,7 +72,7 @@ const updateUser = (req, res, next) => {
   )
     .then((user) => {
       if (!user) {
-        throw new BadRequestError({ message: badRequstError });
+        throw new BadRequestError(badRequestError);
       }
       res.send(user);
     })

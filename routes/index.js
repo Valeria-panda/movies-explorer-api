@@ -9,13 +9,13 @@ const { notFound } = require('../utils/constants');
 
 router.post('/signup', validateUser, createUser);
 router.post('/signin', validateLogin, login);
-router.get('./signout', auth, signout);
+router.get('/signout', auth, signout);
 
 router.use(auth, user);
 router.use(auth, movies);
 
 router.use((req, res, next) => {
-  next(new NotFoundError({ message: notFound }));
+  next(new NotFoundError(notFound));
 });
 
 module.exports = router;

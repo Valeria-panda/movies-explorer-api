@@ -34,12 +34,12 @@ userSchema.statics.findUserByCredentials = function (email, password) {
   return this.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        throw new UnauthorizedError({ message: unauthorized });
+        throw new UnauthorizedError(unauthorized);
       }
       return bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {
-            throw new UnauthorizedError({ message: unauthorized });
+            throw new UnauthorizedError(unauthorized);
           }
           return user;
         });

@@ -7,7 +7,7 @@ const { JWT_SECRET } = require('../utils/config');
 const auth = (req, res, next) => {
   const { authorization } = req.headers;
   if (!authorization || !authorization.startsWith('Bearer ')) {
-    console.log('Unauthorized');
+    throw new UnauthorizedError(unauthorized);
   }
 
   const token = authorization.replace('Bearer ', '');
@@ -16,7 +16,7 @@ const auth = (req, res, next) => {
     // payload = jwt.verify(token, `${NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret'}`);
     payload = jwt.verify(token, JWT_SECRET);
   } catch (err) {
-    throw new UnauthorizedError({ message: unauthorized });
+    throw new UnauthorizedError(unauthorized);
   }
   req.user = payload;
   return next();
