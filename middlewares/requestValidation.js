@@ -11,7 +11,7 @@ const urlValidation = (value) => {
 
 const validateId = celebrate({
   params: Joi.object().keys({
-    _id: Joi.objectId(),
+    movieId: Joi.objectId().required(),
   }),
 });
 
@@ -49,6 +49,7 @@ const validateMovies = celebrate({
     thumbnail: Joi.string().custom(urlValidation).required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
+    movieId: Joi.string().required(),
   }),
 });
 
