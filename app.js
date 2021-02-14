@@ -12,7 +12,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const serverErrorHandler = require('./middlewares/serverErrorHandler');
 
 // const { PORT = 3000 } = process.env;
-const { PORT, DB_ADDRESS } = require('./utils/config');
+const { PORT, DB_ADDRESS = 'mongodb://localhost:27017/moviesdb' } = require('./utils/config');
 
 const app = express();
 
