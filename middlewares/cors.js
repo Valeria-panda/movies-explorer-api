@@ -5,7 +5,7 @@ module.exports.corsConfig = {
     'https://www.movie.students.nomoredomains.rocks',
     'http://www.movie.students.nomoredomains.rocks',
     'http://localhost:3000',
-    'https://localhost:3000',
+    'http://localhost:3001',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,

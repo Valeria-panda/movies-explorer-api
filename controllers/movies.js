@@ -5,8 +5,13 @@ const ForbiddenError = require('../errors/forbiddenError');
 const { badRequestError, forbiddenError, movieNotFound } = require('../utils/constants');
 
 const getMovies = (req, res, next) => {
-  Movie.find({})
-    .then((movie) => res.send(movie))
+  Movie.find({ owner: req.user._id })
+    .then((movies) => {
+      if (!movies) {
+        res.send([]);
+      }
+      res.send(movies);
+    })
     .catch(next);
 };
 
@@ -43,7 +48,9 @@ const createMovies = (req, res, next) => {
 };
 
 const deleteMovies = (req, res, next) => {
-  Movie.findById(req.params.movieId).select('+owner')
+  const { movieId } = req.params;
+
+  Movie.findOne({ movieId }).select('+owner')
     .then((movie) => {
       if (!movie) {
         throw new NotFoundError(movieNotFound);
@@ -51,10 +58,8 @@ const deleteMovies = (req, res, next) => {
       if (movie.owner.toString() !== req.user._id) {
         throw new ForbiddenError(forbiddenError);
       }
-      return Movie.findByIdAndDelete(req.params.movieId);
-    })
-    .then((movie) => {
-      res.send(movie);
+      Movie.deleteOne({ movieId })
+        .then(() => res.send(movie));
     })
     .catch(next);
 };

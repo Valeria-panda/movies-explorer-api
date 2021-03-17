@@ -9,9 +9,9 @@ const urlValidation = (value) => {
   return value;
 };
 
-const validateId = celebrate({
+const validateMovieId = celebrate({
   params: Joi.object().keys({
-    movieId: Joi.objectId().required(),
+    movieId: Joi.number().required(),
   }),
 });
 
@@ -49,12 +49,12 @@ const validateMovies = celebrate({
     thumbnail: Joi.string().custom(urlValidation).required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
-    movieId: Joi.string().required(),
+    movieId: Joi.number().required(),
   }),
 });
 
 module.exports = {
-  validateId,
+  validateMovieId,
   validateUser,
   validateUserUpdate,
   validateLogin,
